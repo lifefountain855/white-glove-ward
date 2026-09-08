@@ -1,0 +1,51 @@
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+
+// Public Pages
+import Home from './pages/Home';
+import Services from './pages/Services';
+import Pricing from './pages/Pricing';
+import About from './pages/About';
+import FAQ from './pages/FAQ';
+
+// Portal Pages
+import PortalLogin from './pages/portal/PortalLogin';
+import CustomerDashboard from './pages/portal/CustomerDashboard';
+import CleanerDashboard from './pages/portal/CleanerDashboard';
+import ManagerDashboard from './pages/portal/ManagerDashboard';
+
+function Layout() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          
+          <Route path="/portal/login" element={<PortalLogin />} />
+          <Route path="/portal/customer" element={<CustomerDashboard />} />
+          <Route path="/portal/cleaner" element={<CleanerDashboard />} />
+          <Route path="/portal/manager" element={<ManagerDashboard />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
