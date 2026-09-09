@@ -100,7 +100,7 @@ export default function PortalLogin() {
             onClick={() => setIsSignUp(!isSignUp)}
             className="text-secondary text-sm hover:text-white transition-colors"
           >
-            {isSignUp ? 'already have an account? log in' : 'need an account? sign up'}
+            {isSignUp ? 'already have an account? > log in <' : 'need an account? > sign up <'}
           </button>
         </div>
       </div>

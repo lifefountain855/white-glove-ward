@@ -22,7 +22,7 @@ export default function Navbar() {
         {/* CTA and Portal */}
         <div className="flex items-center gap-6">
           <Link to="/portal/login" className="hidden md:block text-secondary hover:text-white transition-colors">
-            portal login
+           &gt; portal login &lt;
           </Link>
           <Link to="/portal/customer" className="btn-primary py-2 px-4 text-sm">
             book a cleaning →

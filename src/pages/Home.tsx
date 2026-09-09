@@ -2,6 +2,27 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 
+const services=[
+  {
+    name:"standard clean",
+    link:"std",
+    price:150,
+    tagline:"routine maintainence\nfor your home"
+  },
+  {
+    name:"deep clean",
+    link:"deep",
+    price:250,
+    tagline:"a more detailed\nreset for your home"
+  },
+  {
+    name:"move-out clean",
+    link:"move-out",
+    price:350,
+    tagline:"leave the property\nready for what's next"
+  }
+]
+
 export default function Home() {
   return (
     <div className="w-full">
@@ -76,49 +97,27 @@ export default function Home() {
           
           <div className="flex flex-col border-t border-subtle">
             {/* Service Row 1 */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-subtle group hover:bg-[#151515] transition-colors duration-400">
-              <div className="md:col-span-1 font-accent text-secondary">01</div>
-              <div className="md:col-span-5">
-                <h3 className="text-2xl mb-4">standard clean</h3>
-                <p className="text-secondary leading-relaxed">routine maintenance<br />for your home</p>
+            { services.map((service,i)=>{
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-subtle group hover:bg-[#151515] transition-colors duration-400">
+                <div className="md:col-span-1 font-accent text-secondary">0{i}</div>
+                <div className="md:col-span-5">
+                  <h3 className="text-2xl mb-4">{service.name}</h3>
+                  <p className="text-secondary leading-relaxed">{service.tagline}</p>
+                </div>
+                <div className="md:col-span-6 flex flex-col md:items-end justify-between">
+                  <span className="text-secondary mb-8 md:mb-0">from ${service.price}</span>
+                  <Link to={`/${service.link}`} className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
+                    view service →
+                  </Link>
+                  <Link to={`/${service.link}`} className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
+                    view service →
+                  </Link>
+                </div>
               </div>
-              <div className="md:col-span-6 flex flex-col md:items-end justify-between">
-                <span className="text-secondary mb-8 md:mb-0">from $150</span>
-                <Link to="/services" className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
-                  view service →
-                </Link>
-              </div>
-            </div>
-
-            {/* Service Row 2 */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-subtle group hover:bg-[#151515] transition-colors duration-400">
-              <div className="md:col-span-1 font-accent text-secondary">02</div>
-              <div className="md:col-span-5">
-                <h3 className="text-2xl mb-4">deep clean</h3>
-                <p className="text-secondary leading-relaxed">a more detailed<br />reset for your home</p>
-              </div>
-              <div className="md:col-span-6 flex flex-col md:items-end justify-between">
-                <span className="text-secondary mb-8 md:mb-0">from $250</span>
-                <Link to="/services" className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
-                  view service →
-                </Link>
-              </div>
-            </div>
-
-            {/* Service Row 3 */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-subtle group hover:bg-[#151515] transition-colors duration-400">
-              <div className="md:col-span-1 font-accent text-secondary">03</div>
-              <div className="md:col-span-5">
-                <h3 className="text-2xl mb-4">move-out clean</h3>
-                <p className="text-secondary leading-relaxed">leave the property<br />ready for what's next</p>
-              </div>
-              <div className="md:col-span-6 flex flex-col md:items-end justify-between">
-                <span className="text-secondary mb-8 md:mb-0">from $350</span>
-                <Link to="/services" className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
-                  view service →
-                </Link>
-              </div>
-            </div>
+                )
+              })
+            }
           </div>
         </div>
       </section>
