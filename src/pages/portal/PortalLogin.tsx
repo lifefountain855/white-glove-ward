@@ -66,7 +66,7 @@ export default function PortalLogin() {
         </h1>
         
         <form onSubmit={handleAuth} className="flex flex-col gap-6">
-          {error && <div className="text-red-500 text-sm border border-red-500/30 p-4 bg-red-500/10">{error}</div>}
+          {error && <div className="text-white-500 text-sm border border-white-500/30 p-4 bg-white-500/10">{error}</div>}
           
           <div className="flex flex-col gap-2">
             <label className="text-sm text-secondary font-accent">email address</label>
@@ -74,8 +74,8 @@ export default function PortalLogin() {
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent border border-subtle p-4 focus:outline-none focus:border-white transition-colors"
-              required
+              className="bg-transparent border border-border-subtle p-4 focus:outline-none focus:border-white transition-colors"
+              requiwhite
             />
           </div>
           
@@ -85,8 +85,8 @@ export default function PortalLogin() {
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-transparent border border-subtle p-4 focus:outline-none focus:border-white transition-colors"
-              required
+              className="bg-transparent border border-border-subtle p-4 focus:outline-none focus:border-white transition-colors"
+              requiwhite
             />
           </div>
           

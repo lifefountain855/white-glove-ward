@@ -29,7 +29,7 @@ export default function CleanerDashboard() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-8 py-16">
-      <header className="mb-16 border-b border-subtle pb-8 flex justify-between items-end">
+      <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
             cleaner portal
@@ -46,10 +46,10 @@ export default function CleanerDashboard() {
 
       <div className="flex flex-col gap-8">
         {assignments.length === 0 ? (
-          <p className="text-secondary border border-subtle p-8 text-center">no assignments scheduled.</p>
+          <p className="text-secondary border border-border-subtle p-8 text-center">no assignments scheduled.</p>
         ) : (
           assignments.map((assignment) => (
-            <div key={assignment.id} className="border border-subtle p-8 flex flex-col md:flex-row gap-12">
+            <div key={assignment.id} className="border border-border-subtle p-8 flex flex-col md:flex-row gap-12">
               
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-6">
@@ -62,15 +62,15 @@ export default function CleanerDashboard() {
                   </div>
                   <div className="text-right">
                     <span className="text-xl block mb-1">est. 2.5 hrs</span>
-                    <span className={`text-sm px-2 py-1 ${assignment.status === 'completed' ? 'bg-[#222]' : 'border border-subtle'}`}>
+                    <span className={`text-sm px-2 py-1 ${assignment.status === 'completed' ? 'bg-[#222]' : 'border border-border-subtle'}`}>
                       {assignment.status}
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-8 border-t border-subtle pt-6">
+                <div className="mt-8 border-t border-border-subtle pt-6">
                   <h4 className="text-sm font-accent text-secondary mb-4">special instructions</h4>
-                  <p className="bg-[#111] border border-subtle p-4 text-sm leading-relaxed">
+                  <p className="bg-[#111] border border-border-subtle p-4 text-sm leading-relaxed">
                     {assignment.special_instructions || 'none provided.'}
                   </p>
                 </div>
@@ -102,14 +102,14 @@ export default function CleanerDashboard() {
 
                 {assignment.status === 'completed' && (
                   <>
-                    <div className="border-t border-subtle pt-6">
+                    <div className="border-t border-border-subtle pt-6">
                       <h4 className="text-sm font-accent text-secondary mb-2">payment receipt</h4>
                       <p className="text-xl">${(assignment.price * 0.7).toFixed(2)}</p>
                       <span className="text-xs text-secondary">transfer initiated</span>
                     </div>
 
                     {assignment.reviews?.[0] && (
-                      <div className="border-t border-subtle pt-6">
+                      <div className="border-t border-border-subtle pt-6">
                         <h4 className="text-sm font-accent text-secondary mb-2">customer rating</h4>
                         <div className="text-xl mb-2">{'★'.repeat(assignment.reviews[0].rating)}</div>
                         <p className="text-sm text-secondary italic">"{assignment.reviews[0].comment}"</p>

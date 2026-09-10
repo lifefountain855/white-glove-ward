@@ -26,12 +26,12 @@ export default function ManagerDashboard() {
     fetchUserAndData();
   }, [navigate]);
 
-  const totalRevenue = bookings.reduce((sum, b) => sum + Number(b.price), 0);
+  const totalRevenue = bookings.whiteuce((sum, b) => sum + Number(b.price), 0);
   const payroll = totalRevenue * 0.7; // 70% goes to cleaners
 
   return (
     <div className="max-w-[1400px] mx-auto px-8 py-16">
-      <header className="mb-16 border-b border-subtle pb-8 flex justify-between items-end">
+      <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
             manager portal
@@ -48,19 +48,19 @@ export default function ManagerDashboard() {
 
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-        <div className="border border-subtle p-6">
+        <div className="border border-border-subtle p-6">
           <span className="text-sm font-accent text-secondary block mb-4">total revenue (mtd)</span>
           <span className="text-3xl">${totalRevenue.toFixed(2)}</span>
         </div>
-        <div className="border border-subtle p-6">
+        <div className="border border-border-subtle p-6">
           <span className="text-sm font-accent text-secondary block mb-4">recurring revenue</span>
           <span className="text-3xl">${(totalRevenue * 0.4).toFixed(2)}</span>
         </div>
-        <div className="border border-subtle p-6">
+        <div className="border border-border-subtle p-6">
           <span className="text-sm font-accent text-secondary block mb-4">payroll (mtd)</span>
           <span className="text-3xl text-secondary">${payroll.toFixed(2)}</span>
         </div>
-        <div className="border border-subtle p-6">
+        <div className="border border-border-subtle p-6">
           <span className="text-sm font-accent text-secondary block mb-4">avg rating</span>
           <span className="text-3xl">4.9</span>
         </div>
@@ -76,7 +76,7 @@ export default function ManagerDashboard() {
           </div>
           <div className="flex flex-col gap-4">
             {bookings.filter(b => b.status !== 'completed').map((booking) => (
-              <div key={booking.id} className="border border-subtle p-5 flex justify-between items-center bg-[#111]">
+              <div key={booking.id} className="border border-border-subtle p-5 flex justify-between items-center bg-[#111]">
                 <div>
                   <h4 className="text-lg mb-1">{booking.customer?.full_name}</h4>
                   <span className="text-sm text-secondary font-accent">
@@ -85,7 +85,7 @@ export default function ManagerDashboard() {
                 </div>
                 <div className="text-right">
                   <span className="block text-sm mb-2">{booking.cleaner?.full_name || 'unassigned'}</span>
-                  <select className="bg-transparent border border-subtle text-sm text-secondary p-1">
+                  <select className="bg-transparent border border-border-subtle text-sm text-secondary p-1">
                     <option>reassign</option>
                     <option>Carlos Cleaner</option>
                   </select>
@@ -100,7 +100,7 @@ export default function ManagerDashboard() {
           <h2 className="text-2xl mb-8">recent activity</h2>
           <div className="flex flex-col gap-4">
             {bookings.filter(b => b.status === 'completed').map((booking) => (
-              <div key={booking.id} className="border border-subtle p-5">
+              <div key={booking.id} className="border border-border-subtle p-5">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h4 className="text-lg">{booking.customer?.full_name}</h4>

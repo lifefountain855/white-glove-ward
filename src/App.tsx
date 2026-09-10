@@ -9,6 +9,8 @@ import Pricing from './pages/Pricing';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 
+import NotFound from './pages/NotFound';
+
 // Portal Pages
 import PortalLogin from './pages/portal/PortalLogin';
 import CustomerDashboard from './pages/portal/CustomerDashboard';
@@ -42,6 +44,8 @@ export default function App() {
           <Route path="/portal/customer" element={<CustomerDashboard />} />
           <Route path="/portal/cleaner" element={<CleanerDashboard />} />
           <Route path="/portal/manager" element={<ManagerDashboard />} />
+
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Router>

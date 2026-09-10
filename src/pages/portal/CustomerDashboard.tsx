@@ -72,7 +72,7 @@ export default function CustomerDashboard() {
 
   return (
     <div className="max-w-[1400px] mx-auto px-8 py-16">
-      <header className="mb-16 border-b border-subtle pb-8 flex justify-between items-end">
+      <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
             customer portal
@@ -91,17 +91,17 @@ export default function CustomerDashboard() {
         {/* Book a new cleaning */}
         <div className="lg:col-span-5">
           <h2 className="text-2xl mb-8">book a cleaning</h2>
-          <form onSubmit={handleBook} className="flex flex-col gap-6 p-8 border border-subtle">
+          <form onSubmit={handleBook} className="flex flex-col gap-6 p-8 border border-border-subtle">
             
             <div className="flex flex-col gap-2">
               <label className="text-sm text-secondary font-accent">address</label>
-              <input type="text" required value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-subtle p-3 focus:outline-none focus:border-white transition-colors" />
+              <input type="text" requiwhite value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors" />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-secondary font-accent">home size</label>
-                <select value={homeSize} onChange={e => setHomeSize(e.target.value)} className="bg-black border border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+                <select value={homeSize} onChange={e => setHomeSize(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
                   <option value="1 bed, 1 bath">1 bed, 1 bath</option>
                   <option value="2 bed, 1 bath">2 bed, 1 bath</option>
                   <option value="2 bed, 2 bath">2 bed, 2 bath</option>
@@ -111,7 +111,7 @@ export default function CustomerDashboard() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-secondary font-accent">service</label>
-                <select value={serviceType} onChange={e => setServiceType(e.target.value)} className="bg-black border border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+                <select value={serviceType} onChange={e => setServiceType(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
                   <option value="standard">standard clean</option>
                   <option value="deep">deep clean</option>
                   <option value="move-out">move-out clean</option>
@@ -121,12 +121,12 @@ export default function CustomerDashboard() {
 
             <div className="flex flex-col gap-2">
               <label className="text-sm text-secondary font-accent">date & time</label>
-              <input type="datetime-local" required value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-subtle p-3 focus:outline-none focus:border-white transition-colors [color-scheme:dark]" />
+              <input type="datetime-local" requiwhite value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors [color-scheme:dark]" />
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="text-sm text-secondary font-accent">recurring schedule</label>
-              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
                 <option value="none">just once</option>
                 <option value="weekly">weekly (-20%)</option>
                 <option value="biweekly">biweekly (-10%)</option>
@@ -134,7 +134,7 @@ export default function CustomerDashboard() {
               </select>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-subtle flex justify-between items-center">
+            <div className="mt-8 pt-6 border-t border-border-subtle flex justify-between items-center">
               <div>
                 <span className="block text-sm text-secondary font-accent">exact price</span>
                 <span className="text-3xl">${calculatePrice()}</span>
@@ -151,10 +151,10 @@ export default function CustomerDashboard() {
           <h2 className="text-2xl mb-8">your cleanings</h2>
           <div className="flex flex-col gap-4">
             {bookings.length === 0 ? (
-              <p className="text-secondary border border-subtle p-8 text-center">no cleanings scheduled yet.</p>
+              <p className="text-secondary border border-border-subtle p-8 text-center">no cleanings scheduled yet.</p>
             ) : (
               bookings.map((booking) => (
-                <div key={booking.id} className="border border-subtle p-6 flex flex-col gap-4">
+                <div key={booking.id} className="border border-border-subtle p-6 flex flex-col gap-4">
                   <div className="flex justify-between items-start">
                     <div>
                       <span className="text-sm text-secondary font-accent uppercase tracking-wider block mb-2">
@@ -169,7 +169,7 @@ export default function CustomerDashboard() {
                   </div>
                   
                   {booking.cleaner && (
-                    <div className="mt-4 pt-4 border-t border-subtle flex justify-between items-center">
+                    <div className="mt-4 pt-4 border-t border-border-subtle flex justify-between items-center">
                       <span className="text-secondary text-sm">assigned cleaner: {booking.cleaner.full_name}</span>
                       <span className="text-secondary text-sm bg-[#222] px-3 py-1">notification sent</span>
                     </div>
@@ -178,8 +178,8 @@ export default function CustomerDashboard() {
                   {/* Photos section (mock visual) */}
                   {booking.status === 'completed' && (
                     <div className="mt-4 flex gap-4">
-                      <div className="h-24 w-24 bg-[#222] border border-subtle flex items-center justify-center text-xs text-secondary">before photo</div>
-                      <div className="h-24 w-24 bg-[#222] border border-subtle flex items-center justify-center text-xs text-secondary">after photo</div>
+                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-secondary">before photo</div>
+                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-secondary">after photo</div>
                       {!booking.reviews?.length && (
                         <div className="ml-auto flex items-end">
                           <button className="btn-secondary text-sm py-1 px-3">rate service</button>

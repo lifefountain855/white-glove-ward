@@ -5,11 +5,16 @@
   --font-sans: 'Space Grotesk', sans-serif;
   
   --color-black: #111111;
-  --color-white: #FFFFFF;
-  --color-off-white: #F5F5F3;
+  --color-white: #fafafa;
+  --color-off-white: #eee;
+  --color-off-accent: #ede;
+  --color-border-subtle: #333;
   --color-border: #E6E6E3;
-  --color-secondary: #8A8A86;
+  --color-secondary: #505;
+  --color-secondary-black: #666;
+  --color-accent:#f7f;
   --color-charcoal: #222222;
+  --color-red: var(--color-red-500)
 
   /* Custom utility classes in Tailwind v4 are automatically generated from theme variables,
      but we can also define them here if needed */
@@ -18,8 +23,8 @@
 @layer base {
   html {
     font-family: var(--font-mono);
-    background-color: var(--color-black);
-    color: var(--color-white);
+    background-color: var(--color-white);
+    color: var(--color-black);
   }
   
   body {
@@ -46,15 +51,15 @@
   }
   
   .border-subtle {
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-subtle);
   }
   .border-dark {
-    border: 1px solid #333;
+    border: 1px solid var(--color-border);
   }
 
   /* Button utilities */
   .btn-primary {
-    @apply bg-white text-black px-6 py-3 border border-white hover:bg-black hover:text-white transition-colors duration-250 cursor-pointer inline-flex items-center gap-2;
+    @apply bg-black text-white px-6 py-3 border border-border-subtle hover:bg-white hover:text-black transition-colors duration-250 cursor-pointer inline-flex items-center gap-2;
   }
   
   .btn-secondary {

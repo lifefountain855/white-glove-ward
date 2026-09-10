@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
+import BobbleCard from '../components/bobble'
 
 const services=[
   {
@@ -38,12 +39,12 @@ export default function Home() {
             01 / professional home cleaning
           </span>
           
-          <h1 className="text-5xl md:text-7xl leading-[1.1] mb-12">
+          <h1 className="text-5xl md:text-7xl leading-[1.5] mb-12">
             a cleaner home.<br />
             without the hassle.
           </h1>
           
-          <p className="text-xl text-secondary max-w-2xl leading-relaxed mb-16">
+          <p className="text-xl text-secondary max-w-2xl leading-[2] mb-16">
             reliable, detailed cleaning<br />
             for people who value their time.
           </p>
@@ -52,15 +53,26 @@ export default function Home() {
             <Link to="/portal/customer" className="btn-primary text-lg">
               book a cleaning →
             </Link>
-            <span className="text-sm font-accent text-secondary tracking-wide">
-              trusted • thorough • worry-free
+            <span className="relative overflow-hidden text-sm font-accent text-secondary tracking-widest pb-1">
+              trusted&nbsp;&nbsp;•&nbsp;&nbsp;thorough&nbsp;&nbsp;•&nbsp;&nbsp;worry-free
+              <motion.div
+                  className="absolute bottom-0 left-0 h-[3px] w-full bg-secondary/60"
+                  animate={{ 
+                    x: ['-100%', '100%'] // Slides entirely across from left to right
+                  }}
+                  transition={{
+                    duration: 4,        // Time it takes to cross the container
+                    repeat: Infinity,   // Loops forever
+                    ease: 'linear'      // Perfect uniform speed
+                  }}
+                  />
             </span>
           </div>
         </motion.div>
       </section>
 
       {/* 02 / TRUST */}
-      <section className="border-t border-subtle">
+      <section className="border-t border-border-subtle">
         <div className="max-w-[1400px] mx-auto px-8 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
           <div>
             <span className="font-accent text-sm text-secondary tracking-widest block mb-8">
@@ -72,34 +84,45 @@ export default function Home() {
             </h2>
           </div>
           
-          <div className="flex flex-col gap-8 justify-center">
+          <div className="flex flex-col gap-1 justify-center">
             {[
-              "fully vetted and trained professionals",
-              "transparent, flat-rate pricing",
-              "easy online booking and management",
-              "satisfaction guaranteed every time"
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <Check className="w-5 h-5 text-secondary" />
-                <span className="text-lg">{item}</span>
-              </div>
+              {id:"00", title:"fully vetted and trained professionals",},
+              {id:"01", title:"transparent, flat-rate pricing",},
+              {id:"02", title:"easy online booking and management",},
+              {id:"03", title:"satisfaction guaranteed every time"},
+            ].map((item) => (
+              <BobbleCard key={item.id} css='relative flex items-center justify-between p-5 rounded-sm select-none shadow-sm hover:shadow-md transition-shadow duration-300'>
+                <div className="flex items-center space-x-4">
+                    <span className="text-sm font-extrabold font-mono">
+                    <Check className="w-5 h-5 text-white bg-secondary rounded-sm" />
+                    </span>
+                    <div>
+                    <h3 className="text-lg tracking-tight leading-tight">
+                        {item.title}
+                    </h3>
+                    {/* {item.subtitle && (
+                        <p className="text-sm opacity-80 mt-0.5">{item.subtitle}</p>
+                    )} */}
+                    </div>
+                </div>
+            </BobbleCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* 03 / SERVICES */}
-      <section className="border-t border-subtle">
+      <section className="border-t border-border-subtle">
         <div className="max-w-[1400px] mx-auto px-8 py-32">
           <span className="font-accent text-sm text-secondary tracking-widest block mb-16">
             03 / services
           </span>
           
-          <div className="flex flex-col border-t border-subtle">
+          <div className="flex flex-col border-t border-border-subtle">
             {/* Service Row 1 */}
             { services.map((service,i)=>{
                 return (
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-12 border-b border-subtle group hover:bg-[#151515] transition-colors duration-400">
+              <Link to={'/'+service.link} className="grid grid-cols-1 md:grid-cols-12 gap-8 p-12 border-b border-border-subtle group hover:bg-border transition-colors duration-400">
                 <div className="md:col-span-1 font-accent text-secondary">0{i}</div>
                 <div className="md:col-span-5">
                   <h3 className="text-2xl mb-4">{service.name}</h3>
@@ -107,14 +130,11 @@ export default function Home() {
                 </div>
                 <div className="md:col-span-6 flex flex-col md:items-end justify-between">
                   <span className="text-secondary mb-8 md:mb-0">from ${service.price}</span>
-                  <Link to={`/${service.link}`} className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
+                  <span className="group-hover:translate-x-3 transition-transform duration-250 flex items-center gap-2 mr-5">
                     view service →
-                  </Link>
-                  <Link to={`/${service.link}`} className="group-hover:translate-x-2 transition-transform duration-250 flex items-center gap-2">
-                    view service →
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
                 )
               })
             }
@@ -143,7 +163,7 @@ export default function Home() {
             <div>
               <span className="font-accent text-2xl text-secondary block mb-8">03</span>
               <h3 className="text-3xl mb-4">you relax</h3>
-              <p className="text-secondary text-lg">come back to a perfectly clean home. no management required.</p>
+              <p className="text-secondary text-lg">come back to a perfectly clean home. no management requiwhite.</p>
             </div>
           </div>
         </div>
