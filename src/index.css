@@ -7,12 +7,12 @@
   --color-black: #111111;
   --color-white: #fafafa;
   --color-off-white: #eee;
-  --color-off-accent: #ede;
-  --color-border-subtle: #333;
-  --color-border: #E6E6E3;
-  --color-secondary: #505;
+  --color-off-accent: #dce;
+  --color-border-subtle: #aaa;
+  --color-border: #333;
+  --color-secondary: #306;
   --color-secondary-black: #666;
-  --color-accent:#f7f;
+  --color-accent:#c7f;
   --color-charcoal: #222222;
   --color-red: var(--color-red-500)
 
@@ -59,14 +59,14 @@
 
   /* Button utilities */
   .btn-primary {
-    @apply bg-black text-white px-6 py-3 border border-border-subtle hover:bg-white hover:text-black transition-colors duration-250 cursor-pointer inline-flex items-center gap-2;
+    @apply bg-black text-white px-6 py-3 border border-border-subtle hover:bg-transparent hover:text-black transition-colors duration-250 cursor-pointer items-center gap-2;
   }
   
   .btn-secondary {
-    @apply bg-transparent text-white px-6 py-3 border border-border hover:border-white transition-colors duration-250 cursor-pointer inline-flex items-center gap-2;
+    @apply bg-accent text-black px-6 py-3 border border-accent hover:bg-transparent transition-colors duration-250 cursor-pointer items-center gap-2;
   }
   
   .btn-accent {
-    @apply bg-black text-white px-6 py-3 border border-black hover:bg-transparent hover:text-black transition-colors duration-250 cursor-pointer inline-flex items-center gap-2;
+    @apply bg-secondary text-white px-6 py-3 border border-secondary hover:bg-accent/50 hover:text-black transition-colors duration-250 cursor-pointer items-center gap-2;
   }
 }

@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* 01 / HERO */}
-      <section className="max-w-[1400px] mx-auto px-8 pt-32 pb-48">
+      <section className="max-w-[1400px] mx-auto px-8 pt-5 md:pt-16 lg:pt-32 pb-48">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ export default function Home() {
             <span className="relative overflow-hidden text-sm font-accent text-secondary tracking-widest pb-1">
               trusted&nbsp;&nbsp;•&nbsp;&nbsp;thorough&nbsp;&nbsp;•&nbsp;&nbsp;worry-free
               <motion.div
-                  className="absolute bottom-0 left-0 h-[3px] w-full bg-secondary/60"
+                  className="absolute bottom-0 left-0 h-[3px] w-full bg-secondary/90"
                   animate={{ 
                     x: ['-100%', '100%'] // Slides entirely across from left to right
                   }}
@@ -94,7 +94,7 @@ export default function Home() {
               <BobbleCard key={item.id} css='relative flex items-center justify-between p-5 rounded-sm select-none shadow-sm hover:shadow-md transition-shadow duration-300'>
                 <div className="flex items-center space-x-4">
                     <span className="text-sm font-extrabold font-mono">
-                    <Check className="w-5 h-5 text-white bg-secondary rounded-sm" />
+                    <Check className="w-5 h-5 text-black bg-green-500/20 rounded-sm" />
                     </span>
                     <div>
                     <h3 className="text-lg tracking-tight leading-tight">
@@ -122,7 +122,7 @@ export default function Home() {
             {/* Service Row 1 */}
             { services.map((service,i)=>{
                 return (
-              <Link to={'/'+service.link} className="grid grid-cols-1 md:grid-cols-12 gap-8 p-12 border-b border-border-subtle group hover:bg-border transition-colors duration-400">
+              <Link to={'/'+service.link} className="grid grid-cols-1 md:grid-cols-12 gap-8 p-12 border-b border-border-subtle group hover:bg-border-subtle/30 transition-colors duration-400">
                 <div className="md:col-span-1 font-accent text-secondary">0{i}</div>
                 <div className="md:col-span-5">
                   <h3 className="text-2xl mb-4">{service.name}</h3>
@@ -130,7 +130,7 @@ export default function Home() {
                 </div>
                 <div className="md:col-span-6 flex flex-col md:items-end justify-between">
                   <span className="text-secondary mb-8 md:mb-0">from ${service.price}</span>
-                  <span className="group-hover:translate-x-3 transition-transform duration-250 flex items-center gap-2 mr-5">
+                  <span className="group-hover:translate-x-3 group-hover:underline transition-transform duration-250 flex items-center gap-2 mr-5">
                     view service →
                   </span>
                 </div>
@@ -151,17 +151,17 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             <div>
-              <span className="font-accent text-2xl text-secondary block mb-8">01</span>
+              <span className="font-accent text-2xl text-secondary block mb-8 border-b border-border-subtle">01</span>
               <h3 className="text-3xl mb-4">book</h3>
               <p className="text-secondary text-lg">select your service, choose a time, and get exact pricing instantly.</p>
             </div>
             <div>
-              <span className="font-accent text-2xl text-secondary block mb-8">02</span>
+              <span className="font-accent text-2xl text-secondary block mb-8 border-b border-border-subtle">02</span>
               <h3 className="text-3xl mb-4">we clean</h3>
               <p className="text-secondary text-lg">our professionals arrive on time and follow a rigorous checklist.</p>
             </div>
             <div>
-              <span className="font-accent text-2xl text-secondary block mb-8">03</span>
+              <span className="font-accent text-2xl text-secondary block mb-8 border-b border-border-subtle">03</span>
               <h3 className="text-3xl mb-4">you relax</h3>
               <p className="text-secondary text-lg">come back to a perfectly clean home. no management requiwhite.</p>
             </div>

@@ -45,8 +45,8 @@ export default function App() {
           <Route path="/portal/cleaner" element={<CleanerDashboard />} />
           <Route path="/portal/manager" element={<ManagerDashboard />} />
 
-          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
