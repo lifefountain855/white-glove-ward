@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* 01 / HERO */}
-      <section className="max-w-[1400px] mx-auto px-8 pt-5 md:pt-16 lg:pt-32 pb-28">
+      <section className="max-w-350 mx-auto px-8 pt-5 md:pt-16 lg:pt-32 pb-28">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -41,12 +41,12 @@ export default function Home() {
             01 / professional home cleaning
           </span>
           
-          <h1 className="text-5xl md:text-7xl leading-[1.5] mb-12">
+          <h1 className="text-5xl md:text-7xl leading-normal mb-12">
             a cleaner home.<br />
             without the hassle.
           </h1>
           
-          <p className="text-xl text-secondary max-w-2xl leading-[2] mb-16">
+          <p className="text-xl text-secondary max-w-2xl leading-loose mb-16">
             reliable, detailed cleaning<br />
             for people who value their time.
           </p>
@@ -58,7 +58,7 @@ export default function Home() {
             <span className="relative overflow-hidden text-sm font-accent text-secondary tracking-widest pb-1">
               trusted&nbsp;&nbsp;•&nbsp;&nbsp;thorough&nbsp;&nbsp;•&nbsp;&nbsp;worry-free
               <motion.div
-                  className="absolute bottom-0 left-0 h-[3px] w-full bg-secondary/90"
+                  className="absolute bottom-0 left-0 h-0.75 w-full bg-secondary/90"
                   animate={{ 
                     x: ['-100%', '100%'] // Slides entirely across from left to right
                   }}
@@ -73,7 +73,7 @@ export default function Home() {
           {survey && (<div className='relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-8'>
             <a href='https://surveys.asappy.me/white-glove-ward' className='btn-accent'>research survey!</a>
             <motion.div
-              className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              className="absolute inset-0 z-0 bg-linear-to-r from-transparent via-white/30 to-transparent"
               initial={{ left: "-100%" }}
               animate={{ left: "90%" }}
               style={{
@@ -95,7 +95,7 @@ export default function Home() {
 
       {/* 02 / TRUST */}
       <section className="border-t border-border-subtle">
-        <div className="max-w-[1400px] mx-auto px-8 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
+        <div className="max-w-350 mx-auto px-8 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
           <div>
             <span className="font-accent text-sm text-secondary tracking-widest block mb-8">
               02 / standard
@@ -135,7 +135,7 @@ export default function Home() {
 
       {/* 03 / SERVICES */}
       <section className="border-t border-border-subtle">
-        <div className="max-w-[1400px] mx-auto px-8 py-32">
+        <div className="max-w-350 mx-auto px-8 py-32">
           <span className="font-accent text-sm text-secondary tracking-widest block mb-16">
             03 / services
           </span>
@@ -166,7 +166,7 @@ export default function Home() {
 
       {/* 04 / PROCESS */}
       <section className="bg-white text-black py-32">
-        <div className="max-w-[1400px] mx-auto px-8">
+        <div className="max-w-350 mx-auto px-8">
           <span className="font-accent text-sm text-secondary tracking-widest block mb-24">
             04 / process
           </span>
@@ -192,7 +192,7 @@ export default function Home() {
       </section>
 
       {/* 07 / CTA */}
-      <section className="max-w-[1400px] mx-auto px-8 py-48 text-center flex flex-col items-center">
+      <section className="max-w-350 mx-auto px-8 py-48 text-center flex flex-col items-center">
         <h2 className="text-4xl md:text-5xl mb-16">ready for a cleaner home?</h2>
         <Link to="/portal/customer" className="btn-primary text-lg">
           book a cleaning →

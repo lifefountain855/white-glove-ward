@@ -34,7 +34,7 @@ export default function Navbar() {
   const location = useLocation();
   return (
     <nav className="w-full border-b-2 border-border">
-      <div className="max-w-[1400px] mx-auto px-8 py-6 flex items-center justify-between gap-5">
+      <div className="max-w-350 mx-auto px-8 py-6 flex items-center justify-between gap-5">
         
         {/* Logo and Brand */}
         <Link to="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
@@ -62,7 +62,7 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className={`md:hidden p-2 border border-border-subtle hover:bg-black hover:text-white transition-colors ${isMenuOpen ? 'relative z-[60]' : ''}`}
+            className={`md:hidden p-2 border border-border-subtle hover:bg-black hover:text-white transition-colors ${isMenuOpen ? 'relative z-60' : ''}`}
             aria-label={isMenuOpen ? 'close navigation menu' : 'open navigation menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"

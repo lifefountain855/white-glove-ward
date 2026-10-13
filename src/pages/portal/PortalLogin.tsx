@@ -71,7 +71,7 @@ export default function PortalLogin() {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto px-8 py-32 flex flex-col items-center justify-center min-h-[60vh]">
+    <div className="max-w-350 mx-auto px-8 py-32 flex flex-col items-center justify-center min-h-[60vh]">
       <div className="w-full max-w-md">
         <span className="font-accent text-sm text-secondary tracking-widest block mb-8 text-center">
           system access
