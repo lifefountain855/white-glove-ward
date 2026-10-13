@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import BobbleCard from '../components/bobble'
 
+const survey = true;
+
 const services=[
   {
     name:"standard clean",
     link:"std",
-    price:150,
-    tagline:"routine maintainence\nfor your home"
+    price:'25/visit',
+    tagline:"routine  weekly/biweekly/monthly maintenance\nfor your home"
   },
   {
     name:"deep clean",
@@ -28,7 +30,7 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* 01 / HERO */}
-      <section className="max-w-[1400px] mx-auto px-8 pt-5 md:pt-16 lg:pt-32 pb-48">
+      <section className="max-w-[1400px] mx-auto px-8 pt-5 md:pt-16 lg:pt-32 pb-28">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,7 +51,7 @@ export default function Home() {
             for people who value their time.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 mb-16">
             <Link to="/portal/customer" className="btn-primary text-lg">
               book a cleaning →
             </Link>
@@ -68,6 +70,26 @@ export default function Home() {
                   />
             </span>
           </div>
+          {survey && (<div className='relative overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-8'>
+            <a href='https://surveys.asappy.me/white-glove-ward' className='btn-accent'>research survey!</a>
+            <motion.div
+              className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              initial={{ left: "-100%" }}
+              animate={{ left: "90%" }}
+              style={{
+                // Cuts sharper: narrow the gradient's focus by tightening the width 
+                // Rotates the line to a diagonal angle
+                width: "50%", 
+                skewX: -25, 
+              }}
+              transition={{
+                duration: 3,          // Speed of the glimmer slide
+                ease: "circIn",
+                repeat: Infinity,       // Loop forever
+                repeatDelay: 0.1,         // Wait 4 seconds between glimmers
+              }}
+            />
+          </div>)}
         </motion.div>
       </section>
 
@@ -86,7 +108,7 @@ export default function Home() {
           
           <div className="flex flex-col gap-1 justify-center">
             {[
-              {id:"00", title:"fully vetted and trained professionals",},
+              {id:"00", title:"fully trained professionals",},
               {id:"01", title:"transparent, flat-rate pricing",},
               {id:"02", title:"easy online booking and management",},
               {id:"03", title:"satisfaction guaranteed every time"},

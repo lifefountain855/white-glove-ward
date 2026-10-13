@@ -33,7 +33,7 @@ export default function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
   const location = useLocation();
   return (
-    <nav className="w-full border-b border-border-subtle">
+    <nav className="w-full border-b-2 border-border">
       <div className="max-w-[1400px] mx-auto px-8 py-6 flex items-center justify-between gap-5">
         
         {/* Logo and Brand */}
@@ -106,7 +106,7 @@ export default function Navbar() {
                     {location.pathname==to && (<span className='absolute right-8 text-secondary'>&lt;</span>)}
                   </Link>
                 ))}
-                <div className='h-[5vh] flex-grow'></div>
+                <div className='h-[5vh] grow'></div>
                 <Link
                   to="/portal/login"
                   onClick={closeMenu}

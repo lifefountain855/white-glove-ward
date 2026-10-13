@@ -35,11 +35,15 @@ export default function CustomerDashboard() {
     fetchUserAndData();
   }, [navigate]);
 
-  const calculatePrice = () => {
+  const calculatePrice = (n=false) => {
     let base = serviceType === 'standard' ? 150 : serviceType === 'deep' ? 250 : 350;
     if (homeSize.includes('3 bed')) base += 50;
-    if (homeSize.includes('4 bed')) base += 100;
-    return base;
+    if (homeSize.includes('4+ bed')) base += 100;
+    let discount=1;
+    if (recurring=='weekly') discount=0.85
+    if (recurring=='biweekly') discount=0.95
+    if (n==true) return Math.round(base*discount);
+    return (<span className="text-3xl">{(recurring== 'weekly' || recurring=='biweekly') && (<span className="text-black/50 line-through">${base}</span>)}<span> ${Math.round(base*discount)}</span></span>)
   };
 
   const handleBook = async (e: React.FormEvent) => {
@@ -55,8 +59,9 @@ export default function CustomerDashboard() {
           scheduled_date: new Date(date).toISOString(),
           home_size: homeSize,
           service_type: serviceType,
-          price: calculatePrice(),
-          special_instructions: `Address: ${address}. Recurring: ${recurring}`,
+          price: calculatePrice(true),
+          special_instructions: `Address: ${address}`,
+          recurring:recurring,
         })
         .select();
 
@@ -71,7 +76,7 @@ export default function CustomerDashboard() {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto px-8 py-16">
+    <div className="max-w-[1400px] mx-auto px-2 md:px-8 py-16">
       <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
@@ -81,7 +86,7 @@ export default function CustomerDashboard() {
         </div>
         <button 
           onClick={() => { supabase.auth.signOut(); navigate('/portal/login'); }}
-          className="text-secondary hover:text-white transition-colors font-accent text-sm"
+          className="btn-invert"
         >
           sign out
         </button>
@@ -94,14 +99,14 @@ export default function CustomerDashboard() {
           <form onSubmit={handleBook} className="flex flex-col gap-6 p-8 border border-border-subtle">
             
             <div className="flex flex-col gap-2">
-              <label className="text-sm text-secondary font-accent">address</label>
-              <input type="text" requiwhite value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors" />
+              <label className="text-sm text-secondary font-accent">address *</label>
+              <input type="text" required value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-secondary font-accent">home size</label>
-                <select value={homeSize} onChange={e => setHomeSize(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+                <select value={homeSize} onChange={e => setHomeSize(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
                   <option value="1 bed, 1 bath">1 bed, 1 bath</option>
                   <option value="2 bed, 1 bath">2 bed, 1 bath</option>
                   <option value="2 bed, 2 bath">2 bed, 2 bath</option>
@@ -111,7 +116,7 @@ export default function CustomerDashboard() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-secondary font-accent">service</label>
-                <select value={serviceType} onChange={e => setServiceType(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+                <select value={serviceType} onChange={e => setServiceType(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
                   <option value="standard">standard clean</option>
                   <option value="deep">deep clean</option>
                   <option value="move-out">move-out clean</option>
@@ -120,24 +125,24 @@ export default function CustomerDashboard() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-sm text-secondary font-accent">date & time</label>
-              <input type="datetime-local" requiwhite value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors [color-scheme:dark]" />
+              <label className="text-sm text-secondary font-accent">date & time *</label>
+              <input type="datetime-local" required value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors [color-scheme:dark]" />
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="text-sm text-secondary font-accent">recurring schedule</label>
-              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-white transition-colors text-white">
+              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
                 <option value="none">just once</option>
-                <option value="weekly">weekly (-20%)</option>
-                <option value="biweekly">biweekly (-10%)</option>
+                <option value="weekly">weekly (-15%)</option>
+                <option value="biweekly">biweekly (-5%)</option>
                 <option value="monthly">monthly</option>
               </select>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-border-subtle flex justify-between items-center">
-              <div>
-                <span className="block text-sm text-secondary font-accent">exact price</span>
-                <span className="text-3xl">${calculatePrice()}</span>
+            <div className="mt-8 pt-6 border-t border-border-subtle flex flex-col gap-4 sm:flex-row lg:flex-col justify-between items-center">
+              <div className='text-center'>
+                <span className="block text-sm text-secondary font-accent">exact price:</span>
+                {calculatePrice()}
               </div>
               <button type="submit" disabled={simulatingPay || !address || !date} className="btn-primary">
                 {simulatingPay ? 'processing payment...' : 'pay & book →'}

@@ -4,11 +4,18 @@ import { supabase } from '../../lib/supabase';
 
 export default function PortalLogin() {
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleSwitchSignIn = () =>{
+    setIsSignUp(!isSignUp)
+    setError('')
+  }
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,9 +27,16 @@ export default function PortalLogin() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
+          options: {
+            data: {
+              full_name: name,
+              phone:phone,
+              role: 'customer'
+            }
+          }
         });
         if (error) throw error;
-        alert('Signup successful! You can now log in.');
+        setError('Signup successful! You can now log in.');
         setIsSignUp(false);
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -50,6 +64,7 @@ export default function PortalLogin() {
       }
     } catch (err: any) {
       setError(err.message);
+      console.log(err)
     } finally {
       setLoading(false);
     }
@@ -68,16 +83,38 @@ export default function PortalLogin() {
         <form onSubmit={handleAuth} className="flex flex-col gap-6">
           {error && <div className="text-white-500 text-sm border border-white-500/30 p-4 bg-white-500/10">{error}</div>}
           
+          {isSignUp && (<div className="flex flex-col gap-2">
+            <label className="text-sm text-secondary font-accent">full name</label>
+            <input 
+              type="text" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="bg-transparent border border-border-subtle p-4 focus:outline-accent focus:border-white transition-colors"
+              required
+            />
+          </div>)}
+
           <div className="flex flex-col gap-2">
             <label className="text-sm text-secondary font-accent">email address</label>
             <input 
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent border border-border-subtle p-4 focus:outline-none focus:border-white transition-colors"
-              requiwhite
+              className="bg-transparent border border-border-subtle p-4 focus:outline-accent focus:border-white transition-colors"
+              required
             />
           </div>
+
+          {isSignUp && (<div className="flex flex-col gap-2">
+            <label className="text-sm text-secondary font-accent">phone</label>
+            <input 
+              type="tel" 
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="bg-transparent border border-border-subtle p-4 focus:outline-accent focus:border-white transition-colors"
+              required
+            />
+          </div>)}
           
           <div className="flex flex-col gap-2">
             <label className="text-sm text-secondary font-accent">password</label>
@@ -85,8 +122,8 @@ export default function PortalLogin() {
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-transparent border border-border-subtle p-4 focus:outline-none focus:border-white transition-colors"
-              requiwhite
+              className="bg-transparent border border-border-subtle p-4 focus:outline-accent focus:border-white transition-colors"
+              required
             />
           </div>
           
@@ -97,8 +134,8 @@ export default function PortalLogin() {
 
         <div className="mt-8 text-center">
           <button 
-            onClick={() => setIsSignUp(!isSignUp)}
-            className="text-secondary text-sm hover:text-white transition-colors"
+            onClick={handleSwitchSignIn}
+            className="btn-invert"
           >
             {isSignUp ? 'already have an account? > log in <' : 'need an account? > sign up <'}
           </button>
