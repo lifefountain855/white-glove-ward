@@ -8,11 +8,13 @@ export default function CustomerDashboard() {
   const [bookings, setBookings] = useState<any[]>([]);
   
   // Booking Form State
+  const [category, setCategory] = useState('STD');
+  const [homeType, setHomeType] = useState('D');
+  const [bedrooms, setBedrooms] = useState('1');
+  const [bathrooms, setBathrooms] = useState('1');
+  const [recurring, setRecurring] = useState('N');
   const [address, setAddress] = useState('');
-  const [homeSize, setHomeSize] = useState('2 bed, 1 bath');
-  const [serviceType, setServiceType] = useState('standard');
   const [date, setDate] = useState('');
-  const [recurring, setRecurring] = useState('none');
   const [simulatingPay, setSimulatingPay] = useState(false);
 
   useEffect(() => {
@@ -36,14 +38,36 @@ export default function CustomerDashboard() {
   }, [navigate]);
 
   const calculatePrice = (n=false) => {
-    let base = serviceType === 'standard' ? 150 : serviceType === 'deep' ? 250 : 350;
-    if (homeSize.includes('3 bed')) base += 50;
-    if (homeSize.includes('4+ bed')) base += 100;
+    let base = 0;
+    switch (category){
+      case 'LTE': base = 45;break;
+      case 'STD': base = 100;break;
+      case 'INS': base = 150;break;
+      case 'MOV': base = 200;break;
+      case 'DEP': base = 250;break;
+    }
+    switch (bedrooms){
+      case '1': base-=20;break;
+      case '3': base+=40;break;
+      case '4': base+=60;break;
+    }
+    switch (bathrooms){
+      case '2': base+=5;break;
+      case '3': base+=10;break;
+    }
+    switch (homeType){
+      case 'D': base*=0.7;break;
+      case 'A': base-=10;break;
+      case 'T': base+=50;break;
+      case 'H': base*=1.5;break;
+    }
+    // if (homeSize.includes('4+ bed')) base += 100;
     let discount=1;
-    if (recurring=='weekly') discount=0.85
-    if (recurring=='biweekly') discount=0.95
-    if (n==true) return Math.round(base*discount);
-    return (<span className="text-3xl">{(recurring== 'weekly' || recurring=='biweekly') && (<span className="text-black/50 line-through">${base}</span>)}<span> ${Math.round(base*discount)}</span></span>)
+    if (recurring=='W') discount=0.80
+    if (recurring=='B') discount=0.90
+    if (n==true) return Math.floor(base*discount);
+    // console.log('SCL-'+category+'-'+homeType+bedrooms+bathrooms+'-'+recurring+'00')
+    return (<span className="text-3xl">{(recurring== 'W' || recurring=='B') && (<span className="text-black/50 line-through">${Math.round(base)}</span>)}<span> ${Math.floor(base*discount)}</span></span>)
   };
 
   const handleBook = async (e: React.FormEvent) => {
@@ -57,8 +81,8 @@ export default function CustomerDashboard() {
         .insert({
           customer_id: user?.id,
           scheduled_date: new Date(date).toISOString(),
-          home_size: homeSize,
-          service_type: serviceType,
+          home_size: bedrooms+bathrooms,
+          service_type: category,
           price: calculatePrice(true),
           special_instructions: `Address: ${address}`,
           recurring:recurring,
@@ -76,7 +100,7 @@ export default function CustomerDashboard() {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto px-2 md:px-8 py-16">
+    <div className="max-w-350 mx-auto px-2 md:px-8 py-16">
       <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
@@ -93,64 +117,6 @@ export default function CustomerDashboard() {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-        {/* Book a new cleaning */}
-        <div className="lg:col-span-5">
-          <h2 className="text-2xl mb-8">book a cleaning</h2>
-          <form onSubmit={handleBook} className="flex flex-col gap-6 p-8 border border-border-subtle">
-            
-            <div className="flex flex-col gap-2">
-              <label className="text-sm text-secondary font-accent">address *</label>
-              <input type="text" required value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-sm text-secondary font-accent">home size</label>
-                <select value={homeSize} onChange={e => setHomeSize(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
-                  <option value="1 bed, 1 bath">1 bed, 1 bath</option>
-                  <option value="2 bed, 1 bath">2 bed, 1 bath</option>
-                  <option value="2 bed, 2 bath">2 bed, 2 bath</option>
-                  <option value="3 bed, 2 bath">3 bed, 2 bath</option>
-                  <option value="4+ bed">4+ bed</option>
-                </select>
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-sm text-secondary font-accent">service</label>
-                <select value={serviceType} onChange={e => setServiceType(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
-                  <option value="standard">standard clean</option>
-                  <option value="deep">deep clean</option>
-                  <option value="move-out">move-out clean</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-sm text-secondary font-accent">date & time *</label>
-              <input type="datetime-local" required value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors [color-scheme:dark]" />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-sm text-secondary font-accent">recurring schedule</label>
-              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
-                <option value="none">just once</option>
-                <option value="weekly">weekly (-15%)</option>
-                <option value="biweekly">biweekly (-5%)</option>
-                <option value="monthly">monthly</option>
-              </select>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-border-subtle flex flex-col gap-4 sm:flex-row lg:flex-col justify-between items-center">
-              <div className='text-center'>
-                <span className="block text-sm text-secondary font-accent">exact price:</span>
-                {calculatePrice()}
-              </div>
-              <button type="submit" disabled={simulatingPay || !address || !date} className="btn-primary">
-                {simulatingPay ? 'processing payment...' : 'pay & book →'}
-              </button>
-            </div>
-          </form>
-        </div>
-
         {/* Previous/Upcoming Cleanings */}
         <div className="lg:col-span-7">
           <h2 className="text-2xl mb-8">your cleanings</h2>
@@ -196,6 +162,83 @@ export default function CustomerDashboard() {
               ))
             )}
           </div>
+        </div>
+
+        {/* Book a new cleaning */}
+        <div className="lg:col-span-5">
+          <h2 className="text-2xl mb-8">book a cleaning</h2>
+          <form onSubmit={handleBook} className="flex flex-col gap-6 p-4 sm:p-8 border border-border-subtle">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-secondary font-accent">home type</label>
+              <select value={homeType} onChange={e => setHomeType(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
+                <option value="D">Dorm (roomates)</option>
+                <option value="A">Apartment (self / family)</option>
+                <option value="T">Town-Home</option>
+                <option value="H">Home</option>
+              </select>
+            </div>
+
+            <p className='text-xs italic text-black/80 -mb-5'>*select what rooms/baths to be cleaned</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-secondary font-accent">bedrooms</label>
+                <select value={bedrooms} onChange={e => setBedrooms(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-secondary font-accent">bathrooms</label>
+                <select value={bathrooms} onChange={e => setBathrooms(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+              <div className="flex flex-col col-span-2 gap-2">
+                <label className="text-sm text-secondary font-accent">service</label>
+                <select value={category} onChange={e => setCategory(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
+                  <option value="LTE">lite clean</option>
+                  <option value="STD">standard clean</option>
+                  {homeType=='D' && (<option value="INS">inspection clean</option>)}
+                  <option value="MOV">move-out clean</option>
+                  <option value="DEP">deep clean</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-secondary font-accent">date & time *</label>
+              <input type="datetime-local" required value={date} onChange={e => setDate(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors [color-scheme:dark]" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-secondary font-accent">address *</label>
+              <input type="text" required value={address} onChange={e => setAddress(e.target.value)} className="bg-transparent border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-secondary font-accent">recurring schedule</label>
+              <select value={recurring} onChange={e => setRecurring(e.target.value)} className="bg-black border border-border-subtle p-3 focus:outline-none focus:border-accent transition-colors text-white">
+                <option value="N">just once</option>
+                <option value="W">weekly (-20%)</option>
+                <option value="B">biweekly (-10%)</option>
+                <option value="M">monthly</option>
+              </select>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-border-subtle flex flex-col gap-4 sm:flex-row lg:flex-col justify-between items-center">
+              <div className='text-center'>
+                <span className="block text-sm text-secondary font-accent">exact price:</span>
+                {calculatePrice()}
+              </div>
+              <button type="submit" disabled={simulatingPay} className="btn-primary">
+                {simulatingPay ? 'processing payment...' : 'pay & book →'}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
