@@ -26,12 +26,36 @@ export default function CustomerDashboard() {
       }
       setUser(user);
       
-      const { data: bookingsData } = await supabase
+      const statusOrder: Record<string, number> = {
+        confirmed: 1,
+        pending: 2,
+        completed: 3,
+        canceled: 4,
+      };
+      const { data: bookingsData, error:err } = await supabase
         .from('bookings')
-        .select(`*, cleaner:profiles!cleaner_id(full_name), photos(*), reviews(*)`)
+        .select(`
+          *,
+          cleaner:profiles!bookings_cleaner_id_fkey (
+            full_name
+          )`)
         .eq('customer_id', user.id)
         .order('scheduled_date', { ascending: false });
         
+      console.log(bookingsData, err)
+      if (bookingsData) {
+        bookingsData.sort((a, b) => {
+          // First, compare by scheduled_date descending
+          const dateCompare = new Date(b.scheduled_date).getTime() - new Date(a.scheduled_date).getTime();
+          if (dateCompare !== 0) return dateCompare;
+
+          // If dates are identical, sort by status priority
+          const priorityA = statusOrder[a.status] ?? 99;
+          const priorityB = statusOrder[b.status] ?? 99;
+
+          return priorityA - priorityB;
+        });
+      }
       if (bookingsData) setBookings(bookingsData);
     };
     fetchUserAndData();
@@ -66,7 +90,7 @@ export default function CustomerDashboard() {
     if (recurring=='W') discount=0.80
     if (recurring=='B') discount=0.90
     if (n==true) return Math.floor(base*discount);
-    // console.log('SCL-'+category+'-'+homeType+bedrooms+bathrooms+'-'+recurring+'00')
+    // console.log(`SCL-${category}-${homeType+bedrooms+bathrooms}-${recurring}00`)
     return (<span className="text-3xl">{(recurring== 'W' || recurring=='B') && (<span className="text-black/50 line-through">${Math.round(base)}</span>)}<span> ${Math.floor(base*discount)}</span></span>)
   };
 
@@ -81,11 +105,9 @@ export default function CustomerDashboard() {
         .insert({
           customer_id: user?.id,
           scheduled_date: new Date(date).toISOString(),
-          home_size: bedrooms+bathrooms,
-          service_type: category,
-          price: calculatePrice(true),
+          sku:`SCL-${category}-${homeType+bedrooms+bathrooms}-${recurring}00`,
+          data:{"sku_descriptions":{category:category,item:`${homeType} ${bedrooms} bed ${bathrooms} bath`,recurring:recurring}},
           special_instructions: `Address: ${address}`,
-          recurring:recurring,
         })
         .select();
 
@@ -95,6 +117,7 @@ export default function CustomerDashboard() {
         alert('Payment successful and cleaning booked!');
       } else {
         alert('Error booking cleaning.');
+        console.log(error)
       }
     }, 1500);
   };
@@ -125,13 +148,13 @@ export default function CustomerDashboard() {
               <p className="text-secondary border border-border-subtle p-8 text-center">no cleanings scheduled yet.</p>
             ) : (
               bookings.map((booking) => (
-                <div key={booking.id} className="border border-border-subtle p-6 flex flex-col gap-4">
+                <div key={booking.id} className={`border ${booking.status == 'completed' ? 'bg-neutral-300/80' : booking.status == 'canceled' ? 'bg-red-100/80' : booking.status== 'confirmed' ? 'bg-green-100/80' :''} border-border-subtle p-6 flex flex-col gap-4`}>
                   <div className="flex justify-between items-start">
                     <div>
                       <span className="text-sm text-secondary font-accent uppercase tracking-wider block mb-2">
                         {new Date(booking.scheduled_date).toLocaleDateString()}
                       </span>
-                      <h3 className="text-xl">{booking.service_type} clean</h3>
+                      <h3 className="text-xl">{booking.data?.sku_descriptions?.category} cleaning</h3>
                       <p className="text-secondary mt-1">status: {booking.status}</p>
                     </div>
                     <div className="text-right">
@@ -139,18 +162,18 @@ export default function CustomerDashboard() {
                     </div>
                   </div>
                   
-                  {booking.cleaner && (
+                  {booking.cleaner_id && (
                     <div className="mt-4 pt-4 border-t border-border-subtle flex justify-between items-center">
                       <span className="text-secondary text-sm">assigned cleaner: {booking.cleaner.full_name}</span>
-                      <span className="text-secondary text-sm bg-[#222] px-3 py-1">notification sent</span>
+                      <span className="text-white text-sm bg-[#222] px-3 py-1">notification sent</span>
                     </div>
                   )}
 
                   {/* Photos section (mock visual) */}
                   {booking.status === 'completed' && (
                     <div className="mt-4 flex gap-4">
-                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-secondary">before photo</div>
-                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-secondary">after photo</div>
+                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-white">before photo</div>
+                      <div className="h-24 w-24 bg-[#222] border border-border-subtle flex items-center justify-center text-xs text-white">after photo</div>
                       {!booking.reviews?.length && (
                         <div className="ml-auto flex items-end">
                           <button className="btn-secondary text-sm py-1 px-3">rate service</button>
