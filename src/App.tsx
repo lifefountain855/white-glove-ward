@@ -22,13 +22,13 @@ function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow min-h-screen bg-[var(--color-primary-950)] text-primary-100">
+      <main className="grow min-h-screen bg-primary-950 text-primary-100">
         <motion.div
           initial={{ opacity: 0, filter: 'blur(5px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           exit={{ opacity: 0, filter: 'blur(5px)' }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
-          className="min-h-screen bg-[var(--color-primary-950)]"
+          className="min-h-screen bg-primary-950"
         >
           <Outlet />
         </motion.div>

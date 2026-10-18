@@ -28,7 +28,7 @@ export default function CleanerDashboard() {
   }, [navigate]);
 
   return (
-    <div className="max-w-[1400px] mx-auto px-8 py-16">
+    <div className="max-w-350 mx-auto px-8 py-16">
       <header className="mb-16 border-b border-border-subtle pb-8 flex justify-between items-end">
         <div>
           <span className="font-accent text-sm text-secondary tracking-widest block mb-4">
